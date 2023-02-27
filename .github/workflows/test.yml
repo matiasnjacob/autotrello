@@ -1,35 +1,26 @@
-name: User Input with Checkboxes
-on: push
+name: Mixed inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Who to greet
+        options:
+          - monalisa
+          - cschleiden
+      message:
+        required: true
+      use-emoji:
+        type: boolean
+        description: Include  emojis
+      environment:
+        type: environment
 
 jobs:
-  build:
-    name: Build
+  greet:
     runs-on: ubuntu-latest
+
     steps:
-      - name: User Input
-        run: |
-          echo "Please select one or more options:"
-          echo "[ ] Option 1"
-          echo "[ ] Option 2"
-          echo "[ ] Option 3"
-          echo "[ ] Option 4"
-          echo "[ ] Option 5"
-          read -p "Enter your selection (comma-separated): " selection
-          echo "You selected: $selection"
-        env:
-          SELECTION: ${{ steps.user_input.outputs.selection }}
-      - name: Check Options
-        if: contains(env.SELECTION, 'Option 1')
-        run: echo "Option 1 selected"
-      - name: Check Options
-        if: contains(env.SELECTION, 'Option 2')
-        run: echo "Option 2 selected"
-      - name: Check Options
-        if: contains(env.SELECTION, 'Option 3')
-        run: echo "Option 3 selected"
-      - name: Check Options
-        if: contains(env.SELECTION, 'Option 4')
-        run: echo "Option 4 selected"
-      - name: Check Options
-        if: contains(env.SELECTION, 'Option 5')
-        run: echo "Option 5 selected"
+      - name: Send greeting
+        run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", ""]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
