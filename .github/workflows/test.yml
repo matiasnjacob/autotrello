@@ -7,21 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: User Input
-        uses: alex-page/github-action-user-input@v1.1.1
         id: input
+        uses: actions/toolkit@v2.x
         with:
-          options: |
-            Option 1
-            Option 2
-            Option 3
-            Option 4
-            Option 5
-            Option 6
-            Option 7
-            Option 8
+          path: |
+            Please select one or more options:
+            [ ] Option 1
+            [ ] Option 2
+            [ ] Option 3
+            [ ] Option 4
+            [ ] Option 5
       - name: Check Options
         run: |
           echo "You selected:"
-          for option in ${{ steps.input.outputs.selected_options }}; do
+          for option in ${{ steps.input.outputs.result }}; do
             echo "- $option"
           done
