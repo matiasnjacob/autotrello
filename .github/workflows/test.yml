@@ -3,17 +3,15 @@ name: Mixed inputs
 on:
   workflow_dispatch:
     inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options:
-          - monalisa
-          - cschleiden
-      message:
-        required: true
-      use-emoji:
+      use-emoji-1:
         type: boolean
-        description: Include  emojis
+        description: Build user
+      use-emoji-2:
+        type: boolean
+        description: Build content
+      use-emoji-3:
+        type: boolean
+        description: Build devices
       environment:
         type: environment
 
